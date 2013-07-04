@@ -1,0 +1,915 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report2" language="groovy" pageWidth="1271" pageHeight="2525" columnWidth="1231" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="60e4be0e-e03a-429e-9317-881134da09ba">
+	<property name="ireport.zoom" value="0.75"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="950"/>
+	<style name="Crosstab Data Text" hAlign="Center"/>
+	<subDataset name="UserDataset" uuid="8ac3d631-3fd9-4020-9f37-6b574a148610">
+		<parameter name="monthspassed" class="java.lang.Integer"/>
+		<parameter name="m1" class="java.lang.Integer"/>
+		<parameter name="m2" class="java.lang.Integer"/>
+		<parameter name="m3" class="java.lang.Integer"/>
+		<parameter name="m4" class="java.lang.Integer"/>
+		<parameter name="m5" class="java.lang.Integer"/>
+		<parameter name="m6" class="java.lang.Integer"/>
+		<parameter name="m7" class="java.lang.Integer"/>
+		<parameter name="m8" class="java.lang.Integer"/>
+		<parameter name="m9" class="java.lang.Integer"/>
+		<parameter name="m10" class="java.lang.Integer"/>
+		<parameter name="m11" class="java.lang.Integer"/>
+		<parameter name="m12" class="java.lang.Integer"/>
+		<queryString>
+			<![CDATA[select t.email , l.monthspassed, l.totalHits
+from (select email from CONTENT_ACCESS_BY_MONTH where monthspassed = $P{monthspassed} group by email order by sum(count) desc limit 10)as t , (select email, monthspassed, sum(count)as totalHits from CONTENT_ACCESS_BY_MONTH where monthspassed =  $P{m1} or  monthspassed =  $P{m2}  or  monthspassed = $P{m3}   or  monthspassed = $P{m4}   or  monthspassed = $P{m5}   or  monthspassed = $P{m6}   or  monthspassed = $P{m7}   or  monthspassed = $P{m8}   or  monthspassed = $P{m9}  or  monthspassed = $P{m10}  or  monthspassed = $P{m11}  or  monthspassed = $P{m12}
+
+group by email,monthspassed) as l
+where t.email = l.email  order by monthspassed]]>
+		</queryString>
+		<field name="email" class="java.lang.String"/>
+		<field name="monthspassed" class="java.lang.Integer"/>
+		<field name="totalHits" class="java.math.BigDecimal"/>
+	</subDataset>
+	<subDataset name="TagDataset 1" uuid="313396b5-bdfa-4fc6-817d-363f64e6cf66">
+		<parameter name="monthspassed" class="java.lang.Integer"/>
+		<parameter name="m1" class="java.lang.Integer"/>
+		<parameter name="m2" class="java.lang.Integer"/>
+		<parameter name="m3" class="java.lang.Integer"/>
+		<parameter name="m4" class="java.lang.Integer"/>
+		<parameter name="m5" class="java.lang.Integer"/>
+		<parameter name="m6" class="java.lang.Integer"/>
+		<parameter name="m7" class="java.lang.Integer"/>
+		<parameter name="m8" class="java.lang.Integer"/>
+		<parameter name="m9" class="java.lang.Integer"/>
+		<parameter name="m10" class="java.lang.Integer"/>
+		<parameter name="m11" class="java.lang.Integer"/>
+		<parameter name="m12" class="java.lang.Integer"/>
+		<queryString>
+			<![CDATA[select t.tag , l.monthspassed, l.totalHits
+from (select tag from CONTENT_ACCESS_BY_MONTH where monthspassed = $P{monthspassed}  group by tag order by sum(count) desc limit 10)as t , (select tag, monthspassed, sum(count)as totalHits from CONTENT_ACCESS_BY_MONTH where monthspassed =  $P{m1}  or  monthspassed = $P{m2}  or  monthspassed = $P{m3} or  monthspassed = $P{m4} or  monthspassed = $P{m5} or  monthspassed = $P{m6} or  monthspassed = $P{m7} or  monthspassed = $P{m8} or  monthspassed = $P{m9} or  monthspassed = $P{m10} or  monthspassed = $P{m11} or  monthspassed = $P{m12}
+
+ group by tag,monthspassed) as l
+where t.tag = l.tag  order by monthspassed]]>
+		</queryString>
+		<field name="tag" class="java.lang.String"/>
+		<field name="monthspassed" class="java.lang.Integer"/>
+		<field name="totalHits" class="java.math.BigDecimal"/>
+	</subDataset>
+	<subDataset name="OrgDataset" uuid="d9734da3-5e2a-4d64-8e94-74244a0073ac">
+		<parameter name="monthspassed" class="java.lang.Integer"/>
+		<parameter name="m1" class="java.lang.Integer"/>
+		<parameter name="m2" class="java.lang.Integer"/>
+		<parameter name="m3" class="java.lang.Integer"/>
+		<parameter name="m4" class="java.lang.Integer"/>
+		<parameter name="m5" class="java.lang.Integer"/>
+		<parameter name="m6" class="java.lang.Integer"/>
+		<parameter name="m7" class="java.lang.Integer"/>
+		<parameter name="m8" class="java.lang.Integer"/>
+		<parameter name="m9" class="java.lang.Integer"/>
+		<parameter name="m10" class="java.lang.Integer"/>
+		<parameter name="m11" class="java.lang.Integer"/>
+		<parameter name="m12" class="java.lang.Integer"/>
+		<queryString>
+			<![CDATA[select t.org , l.monthspassed, l.totalHits
+from (select org from CONTENT_ACCESS_BY_MONTH where monthspassed = $P{monthspassed} group by org order by sum(count) desc limit 10)as t , (select org, monthspassed, sum(count)as totalHits from CONTENT_ACCESS_BY_MONTH where monthspassed = $P{m1} or  monthspassed = $P{m2} or  monthspassed = $P{m3} or  monthspassed = $P{m4} or  monthspassed = $P{m5} or  monthspassed = $P{m6} or  monthspassed = $P{m7} or  monthspassed = $P{m8} or  monthspassed = $P{m9} or  monthspassed = $P{m10} or  monthspassed = $P{m11} or  monthspassed = $P{m12}
+group by org,monthspassed) as l
+where t.org = l.org  order by monthspassed]]>
+		</queryString>
+		<field name="org" class="java.lang.String"/>
+		<field name="monthspassed" class="java.lang.Integer"/>
+		<field name="totalHits" class="java.math.BigDecimal"/>
+	</subDataset>
+	<parameter name="monthspassed" class="java.lang.Integer"/>
+	<parameter name="m1" class="java.lang.Integer"/>
+	<parameter name="m2" class="java.lang.Integer"/>
+	<parameter name="m3" class="java.lang.Integer"/>
+	<parameter name="m4" class="java.lang.Integer"/>
+	<parameter name="m5" class="java.lang.Integer"/>
+	<parameter name="m6" class="java.lang.Integer"/>
+	<parameter name="m7" class="java.lang.Integer"/>
+	<parameter name="m8" class="java.lang.Integer"/>
+	<parameter name="m9" class="java.lang.Integer"/>
+	<parameter name="m10" class="java.lang.Integer"/>
+	<parameter name="m11" class="java.lang.Integer"/>
+	<parameter name="m12" class="java.lang.Integer"/>
+	<queryString language="SQL">
+		<![CDATA[select * from CONTENT_ACCESS_BY_MONTH]]>
+	</queryString>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band splitType="Stretch"/>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="1869" splitType="Stretch">
+			<frame>
+				<reportElement uuid="02197916-e943-4630-811d-8ef0cd8f1adf" mode="Opaque" x="0" y="71" width="1230" height="572" backcolor="#3C3C3C"/>
+				<crosstab>
+					<reportElement uuid="579bc541-68a1-4415-85f0-63478763674d" x="45" y="41" width="1140" height="73"/>
+					<crosstabDataset>
+						<dataset>
+							<datasetRun subDataset="UserDataset" uuid="9bc67ad4-7bea-4bcc-b195-b098f9e431ee">
+								<datasetParameter name="m1">
+									<datasetParameterExpression><![CDATA[$P{m1}]]></datasetParameterExpression>
+								</datasetParameter>
+								<datasetParameter name="monthspassed">
+									<datasetParameterExpression><![CDATA[$P{monthspassed}]]></datasetParameterExpression>
+								</datasetParameter>
+								<datasetParameter name="m2">
+									<datasetParameterExpression><![CDATA[$P{m2}]]></datasetParameterExpression>
+								</datasetParameter>
+								<datasetParameter name="m3">
+									<datasetParameterExpression><![CDATA[$P{m3}]]></datasetParameterExpression>
+								</datasetParameter>
+								<datasetParameter name="m4">
+									<datasetParameterExpression><![CDATA[$P{m4}]]></datasetParameterExpression>
+								</datasetParameter>
+								<datasetParameter name="m5">
+									<datasetParameterExpression><![CDATA[$P{m5}]]></datasetParameterExpression>
+								</datasetParameter>
+								<datasetParameter name="m6">
+									<datasetParameterExpression><![CDATA[$P{m6}]]></datasetParameterExpression>
+								</datasetParameter>
+								<datasetParameter name="m7">
+									<datasetParameterExpression><![CDATA[$P{m7}]]></datasetParameterExpression>
+								</datasetParameter>
+								<datasetParameter name="m8">
+									<datasetParameterExpression><![CDATA[$P{m8}]]></datasetParameterExpression>
+								</datasetParameter>
+								<datasetParameter name="m9">
+									<datasetParameterExpression><![CDATA[$P{m9}]]></datasetParameterExpression>
+								</datasetParameter>
+								<datasetParameter name="m10">
+									<datasetParameterExpression><![CDATA[$P{m10}]]></datasetParameterExpression>
+								</datasetParameter>
+								<datasetParameter name="m11">
+									<datasetParameterExpression><![CDATA[$P{m11}]]></datasetParameterExpression>
+								</datasetParameter>
+								<datasetParameter name="m12">
+									<datasetParameterExpression><![CDATA[$P{m12}]]></datasetParameterExpression>
+								</datasetParameter>
+								<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+							</datasetRun>
+						</dataset>
+					</crosstabDataset>
+					<crosstabHeaderCell>
+						<cellContents backcolor="#765151" mode="Opaque">
+							<frame>
+								<reportElement uuid="61259e93-1f84-475f-84a3-0c2ddbf1ef07" style="Crosstab Data Text" mode="Opaque" x="0" y="0" width="198" height="30" backcolor="#E1CECE"/>
+								<box>
+									<pen lineWidth="0.5"/>
+									<topPen lineWidth="0.5"/>
+									<leftPen lineWidth="0.5"/>
+									<bottomPen lineWidth="0.5"/>
+									<rightPen lineWidth="0.5"/>
+								</box>
+								<staticText>
+									<reportElement uuid="b65ccabb-0aa4-4ac8-b1d6-dbea3fe64d96" style="Crosstab Data Text" mode="Transparent" x="57" y="10" width="74" height="20"/>
+									<textElement verticalAlignment="Bottom">
+										<font size="12" isBold="true"/>
+									</textElement>
+									<text><![CDATA[email]]></text>
+								</staticText>
+								<staticText>
+									<reportElement uuid="4c57b356-2fe3-4c75-8880-48624d02a8cd" style="Crosstab Data Text" x="144" y="0" width="54" height="30"/>
+									<textElement verticalAlignment="Middle">
+										<font size="12" isBold="true"/>
+									</textElement>
+									<text><![CDATA[month]]></text>
+								</staticText>
+							</frame>
+						</cellContents>
+					</crosstabHeaderCell>
+					<rowGroup name="email" width="198" totalPosition="End">
+						<bucket class="java.lang.String">
+							<bucketExpression><![CDATA[$F{email}]]></bucketExpression>
+						</bucket>
+						<crosstabRowHeader>
+							<cellContents backcolor="#F0F8FF" mode="Opaque">
+								<box>
+									<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+								</box>
+								<textField>
+									<reportElement uuid="fafd6984-e595-426e-b2b1-0b85115817ad" style="Crosstab Data Text" mode="Opaque" x="0" y="0" width="198" height="25" backcolor="#E1CECE"/>
+									<textElement textAlignment="Left" verticalAlignment="Middle">
+										<font size="12"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$V{email}]]></textFieldExpression>
+								</textField>
+							</cellContents>
+						</crosstabRowHeader>
+						<crosstabTotalRowHeader>
+							<cellContents backcolor="#BFE1FF" mode="Opaque">
+								<box>
+									<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+								</box>
+							</cellContents>
+						</crosstabTotalRowHeader>
+					</rowGroup>
+					<columnGroup name="monthspassed" height="30" totalPosition="End">
+						<bucket class="java.lang.Integer">
+							<bucketExpression><![CDATA[$F{monthspassed}]]></bucketExpression>
+						</bucket>
+						<crosstabColumnHeader>
+							<cellContents backcolor="#F0F8FF" mode="Opaque">
+								<box>
+									<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+								</box>
+								<textField>
+									<reportElement uuid="89eb0966-53d6-4cce-8198-888debcce943" style="Crosstab Data Text" mode="Opaque" x="0" y="0" width="74" height="30" backcolor="#E1CECE"/>
+									<textElement verticalAlignment="Middle">
+										<font size="12" isBold="false"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$V{monthspassed}]]></textFieldExpression>
+								</textField>
+							</cellContents>
+						</crosstabColumnHeader>
+						<crosstabTotalColumnHeader>
+							<cellContents backcolor="#BFE1FF" mode="Opaque">
+								<box>
+									<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+								</box>
+							</cellContents>
+						</crosstabTotalColumnHeader>
+					</columnGroup>
+					<measure name="totalHitsMeasure" class="java.math.BigDecimal">
+						<measureExpression><![CDATA[$F{totalHits}]]></measureExpression>
+					</measure>
+					<crosstabCell width="74" height="25">
+						<cellContents>
+							<box>
+								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+							</box>
+							<textField isBlankWhenNull="true">
+								<reportElement uuid="d819bb5f-44b2-40ca-9d0c-612f0e8a3a41" style="Crosstab Data Text" mode="Opaque" x="0" y="0" width="74" height="25"/>
+								<textElement verticalAlignment="Middle">
+									<font size="12"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$V{totalHitsMeasure}]]></textFieldExpression>
+							</textField>
+						</cellContents>
+					</crosstabCell>
+					<crosstabCell width="74" height="0" rowTotalGroup="email">
+						<cellContents backcolor="#BFE1FF" mode="Opaque">
+							<box>
+								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+							</box>
+						</cellContents>
+					</crosstabCell>
+					<crosstabCell width="0" columnTotalGroup="monthspassed">
+						<cellContents backcolor="#BFE1FF" mode="Opaque">
+							<box>
+								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+							</box>
+						</cellContents>
+					</crosstabCell>
+					<crosstabCell width="0" height="0" rowTotalGroup="email" columnTotalGroup="monthspassed">
+						<cellContents backcolor="#BFE1FF" mode="Opaque">
+							<box>
+								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+							</box>
+						</cellContents>
+					</crosstabCell>
+				</crosstab>
+				<lineChart>
+					<chart>
+						<reportElement uuid="5bc812a9-a9b7-4ac3-9174-4196dbe42c1c" positionType="Float" x="97" y="130" width="1037" height="440"/>
+						<chartTitle/>
+						<chartSubtitle/>
+						<chartLegend textColor="#FFFFFF">
+							<font size="11"/>
+						</chartLegend>
+					</chart>
+					<categoryDataset>
+						<dataset>
+							<datasetRun subDataset="UserDataset" uuid="1b1dfade-ce8f-4233-83dd-4e12664a574b">
+								<datasetParameter name="monthspassed">
+									<datasetParameterExpression><![CDATA[$P{monthspassed}]]></datasetParameterExpression>
+								</datasetParameter>
+								<datasetParameter name="m2">
+									<datasetParameterExpression><![CDATA[$P{m2}]]></datasetParameterExpression>
+								</datasetParameter>
+								<datasetParameter name="m1">
+									<datasetParameterExpression><![CDATA[$P{m1}]]></datasetParameterExpression>
+								</datasetParameter>
+								<datasetParameter name="m3">
+									<datasetParameterExpression><![CDATA[$P{m3}]]></datasetParameterExpression>
+								</datasetParameter>
+								<datasetParameter name="m4">
+									<datasetParameterExpression><![CDATA[$P{m4}]]></datasetParameterExpression>
+								</datasetParameter>
+								<datasetParameter name="m5">
+									<datasetParameterExpression><![CDATA[$P{m5}]]></datasetParameterExpression>
+								</datasetParameter>
+								<datasetParameter name="m6">
+									<datasetParameterExpression><![CDATA[$P{m6}]]></datasetParameterExpression>
+								</datasetParameter>
+								<datasetParameter name="m7">
+									<datasetParameterExpression><![CDATA[$P{m7}]]></datasetParameterExpression>
+								</datasetParameter>
+								<datasetParameter name="m8">
+									<datasetParameterExpression><![CDATA[$P{m8}]]></datasetParameterExpression>
+								</datasetParameter>
+								<datasetParameter name="m9">
+									<datasetParameterExpression><![CDATA[$P{m9}]]></datasetParameterExpression>
+								</datasetParameter>
+								<datasetParameter name="m10">
+									<datasetParameterExpression><![CDATA[$P{m10}]]></datasetParameterExpression>
+								</datasetParameter>
+								<datasetParameter name="m11">
+									<datasetParameterExpression><![CDATA[$P{m11}]]></datasetParameterExpression>
+								</datasetParameter>
+								<datasetParameter name="m12">
+									<datasetParameterExpression><![CDATA[$P{m12}]]></datasetParameterExpression>
+								</datasetParameter>
+							</datasetRun>
+						</dataset>
+						<categorySeries>
+							<seriesExpression><![CDATA[$F{email}]]></seriesExpression>
+							<categoryExpression><![CDATA[$F{monthspassed}]]></categoryExpression>
+							<valueExpression><![CDATA[$F{totalHits}]]></valueExpression>
+						</categorySeries>
+					</categoryDataset>
+					<linePlot>
+						<plot/>
+						<categoryAxisLabelExpression><![CDATA["month"]]></categoryAxisLabelExpression>
+						<categoryAxisFormat>
+							<axisFormat labelColor="#FFFFFF" tickLabelColor="#FFFFFF" axisLineColor="#FFFFFF">
+								<labelFont>
+									<font size="12"/>
+								</labelFont>
+							</axisFormat>
+						</categoryAxisFormat>
+						<valueAxisLabelExpression><![CDATA["hits"]]></valueAxisLabelExpression>
+						<valueAxisFormat>
+							<axisFormat labelColor="#FFFFFF" tickLabelColor="#FFFFFF" axisLineColor="#FFFFFF">
+								<labelFont>
+									<font size="12"/>
+								</labelFont>
+							</axisFormat>
+						</valueAxisFormat>
+					</linePlot>
+				</lineChart>
+				<staticText>
+					<reportElement uuid="deab0de4-e291-49e2-a5c5-928ab314ceaf" x="94" y="13" width="1042" height="25" forecolor="#FFFFFF"/>
+					<textElement textAlignment="Center">
+						<font size="14" isBold="true"/>
+					</textElement>
+					<text><![CDATA[TOP TEN Users who had most number of hits]]></text>
+				</staticText>
+			</frame>
+			<frame>
+				<reportElement uuid="4950feb6-d69c-4ca9-ae27-1c5e1eaa344d" positionType="Float" mode="Opaque" x="0" y="648" width="1230" height="607" backcolor="#3C3C3C"/>
+				<crosstab>
+					<reportElement uuid="50673d79-1763-42aa-bdb8-2e6634f42ba8" x="45" y="57" width="1140" height="80"/>
+					<crosstabDataset>
+						<dataset>
+							<datasetRun subDataset="TagDataset 1" uuid="2f2bdc9d-734c-429e-b79d-2e88a06a4b33">
+								<datasetParameter name="monthspassed">
+									<datasetParameterExpression><![CDATA[$P{monthspassed}]]></datasetParameterExpression>
+								</datasetParameter>
+								<datasetParameter name="m1">
+									<datasetParameterExpression><![CDATA[$P{m1}]]></datasetParameterExpression>
+								</datasetParameter>
+								<datasetParameter name="m2">
+									<datasetParameterExpression><![CDATA[$P{m2}]]></datasetParameterExpression>
+								</datasetParameter>
+								<datasetParameter name="m3">
+									<datasetParameterExpression><![CDATA[$P{m3}]]></datasetParameterExpression>
+								</datasetParameter>
+								<datasetParameter name="m4">
+									<datasetParameterExpression><![CDATA[$P{m4}]]></datasetParameterExpression>
+								</datasetParameter>
+								<datasetParameter name="m5">
+									<datasetParameterExpression><![CDATA[$P{m5}]]></datasetParameterExpression>
+								</datasetParameter>
+								<datasetParameter name="m6">
+									<datasetParameterExpression><![CDATA[$P{m6}]]></datasetParameterExpression>
+								</datasetParameter>
+								<datasetParameter name="m7">
+									<datasetParameterExpression><![CDATA[$P{m7}]]></datasetParameterExpression>
+								</datasetParameter>
+								<datasetParameter name="m8">
+									<datasetParameterExpression><![CDATA[$P{m8}]]></datasetParameterExpression>
+								</datasetParameter>
+								<datasetParameter name="m9">
+									<datasetParameterExpression><![CDATA[$P{m9}]]></datasetParameterExpression>
+								</datasetParameter>
+								<datasetParameter name="m10">
+									<datasetParameterExpression><![CDATA[$P{m10}]]></datasetParameterExpression>
+								</datasetParameter>
+								<datasetParameter name="m11">
+									<datasetParameterExpression><![CDATA[$P{m11}]]></datasetParameterExpression>
+								</datasetParameter>
+								<datasetParameter name="m12">
+									<datasetParameterExpression><![CDATA[$P{m12}]]></datasetParameterExpression>
+								</datasetParameter>
+								<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+							</datasetRun>
+						</dataset>
+					</crosstabDataset>
+					<crosstabHeaderCell>
+						<cellContents>
+							<frame>
+								<reportElement uuid="61259e93-1f84-475f-84a3-0c2ddbf1ef07" style="Crosstab Data Text" mode="Opaque" x="0" y="0" width="161" height="30" backcolor="#E1CECE"/>
+								<box>
+									<pen lineWidth="0.5"/>
+									<topPen lineWidth="0.5"/>
+									<leftPen lineWidth="0.5"/>
+									<bottomPen lineWidth="0.5"/>
+									<rightPen lineWidth="0.5"/>
+								</box>
+								<staticText>
+									<reportElement uuid="b65ccabb-0aa4-4ac8-b1d6-dbea3fe64d96" style="Crosstab Data Text" mode="Transparent" x="50" y="10" width="57" height="20"/>
+									<textElement verticalAlignment="Bottom">
+										<font size="12" isBold="true"/>
+									</textElement>
+									<text><![CDATA[tag]]></text>
+								</staticText>
+								<staticText>
+									<reportElement uuid="4c57b356-2fe3-4c75-8880-48624d02a8cd" style="Crosstab Data Text" x="107" y="0" width="54" height="30"/>
+									<textElement verticalAlignment="Middle">
+										<font size="12" isBold="true"/>
+									</textElement>
+									<text><![CDATA[month]]></text>
+								</staticText>
+							</frame>
+						</cellContents>
+					</crosstabHeaderCell>
+					<rowGroup name="tag" width="161">
+						<bucket class="java.lang.String">
+							<bucketExpression><![CDATA[$F{tag}]]></bucketExpression>
+						</bucket>
+						<crosstabRowHeader>
+							<cellContents backcolor="#F0F8FF" mode="Opaque">
+								<box>
+									<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+								</box>
+								<textField>
+									<reportElement uuid="653df4c4-6413-4be9-9e2c-82c51887e755" style="Crosstab Data Text" mode="Opaque" x="0" y="0" width="161" height="25" backcolor="#E1CECE"/>
+									<textElement textAlignment="Left" verticalAlignment="Middle">
+										<font size="12"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$V{tag}]]></textFieldExpression>
+								</textField>
+							</cellContents>
+						</crosstabRowHeader>
+						<crosstabTotalRowHeader>
+							<cellContents/>
+						</crosstabTotalRowHeader>
+					</rowGroup>
+					<columnGroup name="monthspassed" height="30">
+						<bucket class="java.lang.Integer">
+							<bucketExpression><![CDATA[$F{monthspassed}]]></bucketExpression>
+						</bucket>
+						<crosstabColumnHeader>
+							<cellContents backcolor="#F0F8FF" mode="Opaque">
+								<box>
+									<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+								</box>
+								<textField>
+									<reportElement uuid="647bc0df-acf6-4947-a2a2-a58dbdd973fc" style="Crosstab Data Text" mode="Opaque" x="0" y="0" width="75" height="30" backcolor="#E1CECE"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font size="12"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$V{monthspassed}]]></textFieldExpression>
+								</textField>
+							</cellContents>
+						</crosstabColumnHeader>
+						<crosstabTotalColumnHeader>
+							<cellContents/>
+						</crosstabTotalColumnHeader>
+					</columnGroup>
+					<measure name="totalHitsMeasure" class="java.math.BigDecimal">
+						<measureExpression><![CDATA[$F{totalHits}]]></measureExpression>
+					</measure>
+					<crosstabCell width="75" height="25">
+						<cellContents>
+							<box>
+								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+							</box>
+							<textField isBlankWhenNull="true">
+								<reportElement uuid="8e2f104f-23fe-4009-b31a-fa70df0f15d2" style="Crosstab Data Text" mode="Opaque" x="0" y="0" width="75" height="25"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="12"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$V{totalHitsMeasure}]]></textFieldExpression>
+							</textField>
+						</cellContents>
+					</crosstabCell>
+					<crosstabCell height="25" rowTotalGroup="tag">
+						<cellContents backcolor="#BFE1FF" mode="Opaque">
+							<box>
+								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+							</box>
+							<textField>
+								<reportElement uuid="4945dc4d-e4b1-4bb1-8d41-efe954beb892" style="Crosstab Data Text" x="0" y="0" width="50" height="25"/>
+								<textElement/>
+								<textFieldExpression><![CDATA[$V{totalHitsMeasure}]]></textFieldExpression>
+							</textField>
+						</cellContents>
+					</crosstabCell>
+					<crosstabCell width="50" columnTotalGroup="monthspassed">
+						<cellContents backcolor="#BFE1FF" mode="Opaque">
+							<box>
+								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+							</box>
+							<textField>
+								<reportElement uuid="85faf31a-b118-448c-940a-d802958159cf" style="Crosstab Data Text" x="0" y="0" width="50" height="25"/>
+								<textElement/>
+								<textFieldExpression><![CDATA[$V{totalHitsMeasure}]]></textFieldExpression>
+							</textField>
+						</cellContents>
+					</crosstabCell>
+					<crosstabCell rowTotalGroup="tag" columnTotalGroup="monthspassed">
+						<cellContents backcolor="#BFE1FF" mode="Opaque">
+							<box>
+								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+							</box>
+							<textField>
+								<reportElement uuid="296f91f7-2693-4614-91c3-4ef91ab1bdbc" style="Crosstab Data Text" x="0" y="0" width="50" height="25"/>
+								<textElement/>
+								<textFieldExpression><![CDATA[$V{totalHitsMeasure}]]></textFieldExpression>
+							</textField>
+						</cellContents>
+					</crosstabCell>
+				</crosstab>
+				<lineChart>
+					<chart>
+						<reportElement uuid="e6e94c45-7d4e-4e33-95b6-1067e8888771" positionType="Float" x="97" y="160" width="1037" height="440"/>
+						<chartTitle/>
+						<chartSubtitle/>
+						<chartLegend textColor="#FFFFFF">
+							<font size="11"/>
+						</chartLegend>
+					</chart>
+					<categoryDataset>
+						<dataset>
+							<datasetRun subDataset="TagDataset 1" uuid="b247c43f-0390-4178-8734-e1d7ae75da1e">
+								<datasetParameter name="monthspassed">
+									<datasetParameterExpression><![CDATA[$P{monthspassed}]]></datasetParameterExpression>
+								</datasetParameter>
+								<datasetParameter name="m1">
+									<datasetParameterExpression><![CDATA[$P{m1}]]></datasetParameterExpression>
+								</datasetParameter>
+								<datasetParameter name="m2">
+									<datasetParameterExpression><![CDATA[$P{m2}]]></datasetParameterExpression>
+								</datasetParameter>
+								<datasetParameter name="m3">
+									<datasetParameterExpression><![CDATA[$P{m3}]]></datasetParameterExpression>
+								</datasetParameter>
+								<datasetParameter name="m4">
+									<datasetParameterExpression><![CDATA[$P{m4}]]></datasetParameterExpression>
+								</datasetParameter>
+								<datasetParameter name="m5">
+									<datasetParameterExpression><![CDATA[$P{m5}]]></datasetParameterExpression>
+								</datasetParameter>
+								<datasetParameter name="m6">
+									<datasetParameterExpression><![CDATA[$P{m6}]]></datasetParameterExpression>
+								</datasetParameter>
+								<datasetParameter name="m7">
+									<datasetParameterExpression><![CDATA[$P{m7}]]></datasetParameterExpression>
+								</datasetParameter>
+								<datasetParameter name="m8">
+									<datasetParameterExpression><![CDATA[$P{m8}]]></datasetParameterExpression>
+								</datasetParameter>
+								<datasetParameter name="m9">
+									<datasetParameterExpression><![CDATA[$P{m9}]]></datasetParameterExpression>
+								</datasetParameter>
+								<datasetParameter name="m10">
+									<datasetParameterExpression><![CDATA[$P{m10}]]></datasetParameterExpression>
+								</datasetParameter>
+								<datasetParameter name="m11">
+									<datasetParameterExpression><![CDATA[$P{m11}]]></datasetParameterExpression>
+								</datasetParameter>
+								<datasetParameter name="m12">
+									<datasetParameterExpression><![CDATA[$P{m12}]]></datasetParameterExpression>
+								</datasetParameter>
+							</datasetRun>
+						</dataset>
+						<categorySeries>
+							<seriesExpression><![CDATA[$F{tag}]]></seriesExpression>
+							<categoryExpression><![CDATA[$F{monthspassed}]]></categoryExpression>
+							<valueExpression><![CDATA[$F{totalHits}]]></valueExpression>
+						</categorySeries>
+					</categoryDataset>
+					<linePlot>
+						<plot/>
+						<categoryAxisLabelExpression><![CDATA["month"]]></categoryAxisLabelExpression>
+						<categoryAxisFormat>
+							<axisFormat labelColor="#FFFFFF" tickLabelColor="#FFFFFF" axisLineColor="#FFFFFF">
+								<labelFont>
+									<font size="12"/>
+								</labelFont>
+							</axisFormat>
+						</categoryAxisFormat>
+						<valueAxisLabelExpression><![CDATA["hits"]]></valueAxisLabelExpression>
+						<valueAxisFormat>
+							<axisFormat labelColor="#FFFFFF" tickLabelColor="#FFFFFF" axisLineColor="#FFFFFF">
+								<labelFont>
+									<font size="12"/>
+								</labelFont>
+							</axisFormat>
+						</valueAxisFormat>
+					</linePlot>
+				</lineChart>
+				<staticText>
+					<reportElement uuid="deab0de4-e291-49e2-a5c5-928ab314ceaf" x="104" y="23" width="1042" height="25" forecolor="#FFFFFF"/>
+					<textElement textAlignment="Center">
+						<font size="14" isBold="true"/>
+					</textElement>
+					<text><![CDATA[TOP TEN Tags which had most number of hits]]></text>
+				</staticText>
+			</frame>
+			<frame>
+				<reportElement uuid="a023ecc7-1625-47f7-8579-a88fb9987e42" positionType="Float" mode="Opaque" x="0" y="1260" width="1230" height="607" backcolor="#3C3C3C"/>
+				<crosstab>
+					<reportElement uuid="77abdb82-ee67-4631-9e5f-82aaf3b0ba6f" x="45" y="48" width="1140" height="80"/>
+					<crosstabDataset>
+						<dataset>
+							<datasetRun subDataset="OrgDataset" uuid="e882c841-a901-4bdd-9d2d-a49377c50d7b">
+								<datasetParameter name="monthspassed">
+									<datasetParameterExpression><![CDATA[$P{monthspassed}]]></datasetParameterExpression>
+								</datasetParameter>
+								<datasetParameter name="m1">
+									<datasetParameterExpression><![CDATA[$P{m1}]]></datasetParameterExpression>
+								</datasetParameter>
+								<datasetParameter name="m2">
+									<datasetParameterExpression><![CDATA[$P{m2}]]></datasetParameterExpression>
+								</datasetParameter>
+								<datasetParameter name="m3">
+									<datasetParameterExpression><![CDATA[$P{m3}]]></datasetParameterExpression>
+								</datasetParameter>
+								<datasetParameter name="m4">
+									<datasetParameterExpression><![CDATA[$P{m4}]]></datasetParameterExpression>
+								</datasetParameter>
+								<datasetParameter name="m5">
+									<datasetParameterExpression><![CDATA[$P{m5}]]></datasetParameterExpression>
+								</datasetParameter>
+								<datasetParameter name="m6">
+									<datasetParameterExpression><![CDATA[$P{m6}]]></datasetParameterExpression>
+								</datasetParameter>
+								<datasetParameter name="m7">
+									<datasetParameterExpression><![CDATA[$P{m7}]]></datasetParameterExpression>
+								</datasetParameter>
+								<datasetParameter name="m8">
+									<datasetParameterExpression><![CDATA[$P{m8}]]></datasetParameterExpression>
+								</datasetParameter>
+								<datasetParameter name="m9">
+									<datasetParameterExpression><![CDATA[$P{m9}]]></datasetParameterExpression>
+								</datasetParameter>
+								<datasetParameter name="m10">
+									<datasetParameterExpression><![CDATA[$P{m10}]]></datasetParameterExpression>
+								</datasetParameter>
+								<datasetParameter name="m11">
+									<datasetParameterExpression><![CDATA[$P{m11}]]></datasetParameterExpression>
+								</datasetParameter>
+								<datasetParameter name="m12">
+									<datasetParameterExpression><![CDATA[$P{m12}]]></datasetParameterExpression>
+								</datasetParameter>
+								<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+							</datasetRun>
+						</dataset>
+					</crosstabDataset>
+					<crosstabHeaderCell>
+						<cellContents>
+							<frame>
+								<reportElement uuid="61259e93-1f84-475f-84a3-0c2ddbf1ef07" style="Crosstab Data Text" mode="Opaque" x="0" y="0" width="200" height="30" backcolor="#E1CECE"/>
+								<box>
+									<pen lineWidth="0.5"/>
+									<topPen lineWidth="0.5"/>
+									<leftPen lineWidth="0.5"/>
+									<bottomPen lineWidth="0.5"/>
+									<rightPen lineWidth="0.5"/>
+								</box>
+								<staticText>
+									<reportElement uuid="b65ccabb-0aa4-4ac8-b1d6-dbea3fe64d96" style="Crosstab Data Text" mode="Transparent" x="43" y="10" width="103" height="20"/>
+									<textElement verticalAlignment="Bottom">
+										<font size="12" isBold="true"/>
+									</textElement>
+									<text><![CDATA[organization]]></text>
+								</staticText>
+								<staticText>
+									<reportElement uuid="4c57b356-2fe3-4c75-8880-48624d02a8cd" style="Crosstab Data Text" x="146" y="0" width="54" height="30"/>
+									<textElement verticalAlignment="Middle">
+										<font size="12" isBold="true"/>
+									</textElement>
+									<text><![CDATA[month]]></text>
+								</staticText>
+							</frame>
+						</cellContents>
+					</crosstabHeaderCell>
+					<rowGroup name="org" width="200">
+						<bucket class="java.lang.String">
+							<bucketExpression><![CDATA[$F{org}]]></bucketExpression>
+						</bucket>
+						<crosstabRowHeader>
+							<cellContents backcolor="#F0F8FF" mode="Opaque">
+								<box>
+									<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+								</box>
+								<textField>
+									<reportElement uuid="49b00807-40c9-4a6a-982b-b4697aa81b90" style="Crosstab Data Text" mode="Opaque" x="0" y="0" width="200" height="25" backcolor="#E1CECE"/>
+									<textElement textAlignment="Left" verticalAlignment="Middle">
+										<font size="12"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$V{org}]]></textFieldExpression>
+								</textField>
+							</cellContents>
+						</crosstabRowHeader>
+						<crosstabTotalRowHeader>
+							<cellContents/>
+						</crosstabTotalRowHeader>
+					</rowGroup>
+					<columnGroup name="monthspassed" height="30">
+						<bucket class="java.lang.Integer">
+							<bucketExpression><![CDATA[$F{monthspassed}]]></bucketExpression>
+						</bucket>
+						<crosstabColumnHeader>
+							<cellContents backcolor="#F0F8FF" mode="Opaque">
+								<box>
+									<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+								</box>
+								<textField>
+									<reportElement uuid="0475d7e9-9b67-4cb2-9f6b-2350e8df71d9" style="Crosstab Data Text" mode="Opaque" x="0" y="0" width="70" height="30" backcolor="#E1CECE"/>
+									<textElement verticalAlignment="Middle">
+										<font size="12"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$V{monthspassed}]]></textFieldExpression>
+								</textField>
+							</cellContents>
+						</crosstabColumnHeader>
+						<crosstabTotalColumnHeader>
+							<cellContents/>
+						</crosstabTotalColumnHeader>
+					</columnGroup>
+					<measure name="totalHitsMeasure" class="java.math.BigDecimal">
+						<measureExpression><![CDATA[$F{totalHits}]]></measureExpression>
+					</measure>
+					<crosstabCell width="70" height="25">
+						<cellContents>
+							<box>
+								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+							</box>
+							<textField isBlankWhenNull="true">
+								<reportElement uuid="6233d36e-e150-4d5f-be34-3744362878da" style="Crosstab Data Text" mode="Opaque" x="0" y="0" width="70" height="25"/>
+								<textElement verticalAlignment="Middle">
+									<font size="12"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$V{totalHitsMeasure}]]></textFieldExpression>
+							</textField>
+						</cellContents>
+					</crosstabCell>
+					<crosstabCell height="25" rowTotalGroup="org">
+						<cellContents backcolor="#BFE1FF" mode="Opaque">
+							<box>
+								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+							</box>
+							<textField>
+								<reportElement uuid="53c7daf3-24c2-456a-bc5d-be04d80f0f3c" style="Crosstab Data Text" x="0" y="0" width="50" height="25"/>
+								<textElement/>
+								<textFieldExpression><![CDATA[$V{totalHitsMeasure}]]></textFieldExpression>
+							</textField>
+						</cellContents>
+					</crosstabCell>
+					<crosstabCell width="50" columnTotalGroup="monthspassed">
+						<cellContents backcolor="#BFE1FF" mode="Opaque">
+							<box>
+								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+							</box>
+							<textField>
+								<reportElement uuid="7f6ac663-5c09-48ec-9e8b-66bdc4cbe88a" style="Crosstab Data Text" x="0" y="0" width="50" height="25"/>
+								<textElement/>
+								<textFieldExpression><![CDATA[$V{totalHitsMeasure}]]></textFieldExpression>
+							</textField>
+						</cellContents>
+					</crosstabCell>
+					<crosstabCell rowTotalGroup="org" columnTotalGroup="monthspassed">
+						<cellContents backcolor="#BFE1FF" mode="Opaque">
+							<box>
+								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+							</box>
+							<textField>
+								<reportElement uuid="50580f52-cfa2-4526-998a-f5f04cbe9315" style="Crosstab Data Text" x="0" y="0" width="50" height="25"/>
+								<textElement/>
+								<textFieldExpression><![CDATA[$V{totalHitsMeasure}]]></textFieldExpression>
+							</textField>
+						</cellContents>
+					</crosstabCell>
+				</crosstab>
+				<lineChart>
+					<chart>
+						<reportElement uuid="a23e278f-bff3-46e2-8feb-4466bf7d54fd" positionType="Float" x="97" y="158" width="1037" height="440"/>
+						<chartTitle/>
+						<chartSubtitle/>
+						<chartLegend textColor="#FFFFFF"/>
+					</chart>
+					<categoryDataset>
+						<dataset>
+							<datasetRun subDataset="OrgDataset" uuid="562b2eaf-55c9-464b-9fbd-2b8aa671808e">
+								<datasetParameter name="monthspassed">
+									<datasetParameterExpression><![CDATA[$P{monthspassed}]]></datasetParameterExpression>
+								</datasetParameter>
+								<datasetParameter name="m1">
+									<datasetParameterExpression><![CDATA[$P{m1}]]></datasetParameterExpression>
+								</datasetParameter>
+								<datasetParameter name="m3">
+									<datasetParameterExpression><![CDATA[$P{m3}]]></datasetParameterExpression>
+								</datasetParameter>
+								<datasetParameter name="m2">
+									<datasetParameterExpression><![CDATA[$P{m2}]]></datasetParameterExpression>
+								</datasetParameter>
+								<datasetParameter name="m4">
+									<datasetParameterExpression><![CDATA[$P{m4}]]></datasetParameterExpression>
+								</datasetParameter>
+								<datasetParameter name="m5">
+									<datasetParameterExpression><![CDATA[$P{m5}]]></datasetParameterExpression>
+								</datasetParameter>
+								<datasetParameter name="m6">
+									<datasetParameterExpression><![CDATA[$P{m6}]]></datasetParameterExpression>
+								</datasetParameter>
+								<datasetParameter name="m7">
+									<datasetParameterExpression><![CDATA[$P{m7}]]></datasetParameterExpression>
+								</datasetParameter>
+								<datasetParameter name="m8">
+									<datasetParameterExpression><![CDATA[$P{m8}]]></datasetParameterExpression>
+								</datasetParameter>
+								<datasetParameter name="m9">
+									<datasetParameterExpression><![CDATA[$P{m9}]]></datasetParameterExpression>
+								</datasetParameter>
+								<datasetParameter name="m10">
+									<datasetParameterExpression><![CDATA[$P{m10}]]></datasetParameterExpression>
+								</datasetParameter>
+								<datasetParameter name="m11">
+									<datasetParameterExpression><![CDATA[$P{m11}]]></datasetParameterExpression>
+								</datasetParameter>
+								<datasetParameter name="m12">
+									<datasetParameterExpression><![CDATA[$P{m12}]]></datasetParameterExpression>
+								</datasetParameter>
+							</datasetRun>
+						</dataset>
+						<categorySeries>
+							<seriesExpression><![CDATA[$F{org}]]></seriesExpression>
+							<categoryExpression><![CDATA[$F{monthspassed}]]></categoryExpression>
+							<valueExpression><![CDATA[$F{totalHits}]]></valueExpression>
+						</categorySeries>
+					</categoryDataset>
+					<linePlot>
+						<plot/>
+						<categoryAxisLabelExpression><![CDATA["month"]]></categoryAxisLabelExpression>
+						<categoryAxisFormat>
+							<axisFormat labelColor="#FFFFFF" tickLabelColor="#FFFFFF" axisLineColor="#FFFFFF">
+								<labelFont>
+									<font size="12"/>
+								</labelFont>
+							</axisFormat>
+						</categoryAxisFormat>
+						<valueAxisLabelExpression><![CDATA["hits"]]></valueAxisLabelExpression>
+						<valueAxisFormat>
+							<axisFormat labelColor="#FFFFFF" tickLabelColor="#FFFFFF" axisLineColor="#FFFFFF">
+								<labelFont>
+									<font size="12"/>
+								</labelFont>
+								<tickLabelFont>
+									<font size="12"/>
+								</tickLabelFont>
+							</axisFormat>
+						</valueAxisFormat>
+					</linePlot>
+				</lineChart>
+				<staticText>
+					<reportElement uuid="deab0de4-e291-49e2-a5c5-928ab314ceaf" x="114" y="10" width="1042" height="25" forecolor="#FFFFFF"/>
+					<textElement textAlignment="Center">
+						<font size="14" isBold="true"/>
+					</textElement>
+					<text><![CDATA[TOP TEN Organizations which had most number of hits]]></text>
+				</staticText>
+			</frame>
+			<frame>
+				<reportElement uuid="d94fd0fa-bb13-4be4-99a5-31d325ee35e2" mode="Opaque" x="0" y="0" width="1230" height="47" backcolor="#3C3C3C"/>
+				<staticText>
+					<reportElement uuid="eeebfd52-68f3-4dc6-b864-401cacb43e7d" x="391" y="6" width="449" height="35" forecolor="#FFFFFF"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="22" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+					</textElement>
+					<text><![CDATA[OT STATISTICS HISTORY]]></text>
+				</staticText>
+			</frame>
+		</band>
+	</summary>
+</jasperReport>

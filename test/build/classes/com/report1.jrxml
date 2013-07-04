@@ -1,0 +1,566 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report1" language="groovy" pageWidth="1200" pageHeight="1400" columnWidth="1160" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="e4d83191-3713-4be4-b644-aa46e6a26a56">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Opaque" backcolor="#E1CECE">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[($V{REPORT_COUNT}% 2) == 0]]></conditionExpression>
+			<style backcolor="#E1CECE"/>
+		</conditionalStyle>
+	</style>
+	<style name="table 1">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_CH" mode="Opaque" backcolor="#E1CECE">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[($V{REPORT_COUNT}% 2) == 0]]></conditionExpression>
+			<style backcolor="#E1CECE"/>
+		</conditionalStyle>
+	</style>
+	<style name="table 2">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2_CH" mode="Opaque" backcolor="#E1CECE">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[($V{REPORT_COUNT}% 2) == 0]]></conditionExpression>
+			<style backcolor="#E1CECE"/>
+		</conditionalStyle>
+	</style>
+	<subDataset name="UserTableDataset" uuid="a5ca5cfb-ca44-435f-8fe0-9f8ac3caa75a">
+		<parameter name="monthspassed" class="java.lang.Integer"/>
+		<queryString>
+			<![CDATA[(select email, org ,sum(count)as totalHits ,(select sum(count) from CONTENT_ACCESS_BY_MONTH where monthspassed = $P{monthspassed}) as tot
+ from CONTENT_ACCESS_BY_MONTH where monthspassed = $P{monthspassed} group by email  order by totalHits desc LIMIT 10)
+
+union (SELECT "other", "-" ,sum( count ) - (
+SELECT sum( top)
+FROM (
+
+SELECT sum( count ) AS top
+FROM CONTENT_ACCESS_BY_MONTH
+ where monthspassed = $P{monthspassed}
+GROUP BY email
+ORDER BY top DESC
+LIMIT 10 ) AS topTen
+) AS hits , (select sum(count) from CONTENT_ACCESS_BY_MONTH where monthspassed = $P{monthspassed})
+
+
+FROM CONTENT_ACCESS_BY_MONTH  where monthspassed =$P{monthspassed})]]>
+		</queryString>
+		<field name="email" class="java.lang.String"/>
+		<field name="org" class="java.lang.String"/>
+		<field name="totalHits" class="java.math.BigDecimal"/>
+		<field name="tot" class="java.math.BigDecimal"/>
+		<variable name="sumHits" class="java.lang.Integer" calculation="Sum">
+			<variableExpression><![CDATA[$F{totalHits}]]></variableExpression>
+		</variable>
+	</subDataset>
+	<subDataset name="UserChartDataset" uuid="2eefc7c7-9ff1-4b30-b0c4-3cfed8f272fc">
+		<parameter name="monthspassed" class="java.lang.Integer"/>
+		<queryString>
+			<![CDATA[select email, org ,sum(count)as totalHits from CONTENT_ACCESS_BY_MONTH where monthspassed = $P{monthspassed} group by email  order by totalHits desc LIMIT 10]]>
+		</queryString>
+		<field name="email" class="java.lang.String"/>
+		<field name="org" class="java.lang.String"/>
+		<field name="totalHits" class="java.math.BigDecimal"/>
+	</subDataset>
+	<subDataset name="tagDataset" uuid="e00f5991-7c5e-4d88-9068-88d058219a39">
+		<parameter name="monthspassed" class="java.lang.Integer"/>
+		<queryString>
+			<![CDATA[select tag, sum(count) as tagHits, sum( count ) *100 / (
+SELECT sum( count ) FROM CONTENT_ACCESS_BY_MONTH where monthspassed = $P{monthspassed}) as percentage from CONTENT_ACCESS_BY_MONTH where monthspassed = $P{monthspassed} group by tag order by tagHits desc LIMIT 10]]>
+		</queryString>
+		<field name="tag" class="java.lang.String"/>
+		<field name="tagHits" class="java.math.BigDecimal"/>
+		<field name="percentage" class="java.math.BigDecimal"/>
+	</subDataset>
+	<subDataset name="OrgTableDataset" uuid="5261e478-0d44-437e-9ded-04fb8df6731f">
+		<parameter name="monthspassed" class="java.lang.Integer"/>
+		<queryString>
+			<![CDATA[(select org ,sum(count)as totalHits ,(select sum(count) from CONTENT_ACCESS_BY_MONTH where monthspassed = $P{monthspassed}) as tot
+ from CONTENT_ACCESS_BY_MONTH where monthspassed = $P{monthspassed} group by org order by totalHits desc LIMIT 10)
+
+union (SELECT "other",sum( count ) - (
+SELECT sum( top)
+FROM (
+
+SELECT sum( count ) AS top
+FROM CONTENT_ACCESS_BY_MONTH
+ where monthspassed = $P{monthspassed}
+GROUP BY org
+ORDER BY top DESC
+LIMIT 10 ) AS topTen
+) AS hits , (select sum(count) from CONTENT_ACCESS_BY_MONTH where monthspassed = $P{monthspassed})
+
+
+FROM CONTENT_ACCESS_BY_MONTH  where monthspassed =$P{monthspassed})]]>
+		</queryString>
+		<field name="org" class="java.lang.String"/>
+		<field name="totalHits" class="java.math.BigDecimal"/>
+		<field name="tot" class="java.math.BigDecimal"/>
+		<variable name="hitTotal" class="java.math.BigDecimal" calculation="Sum">
+			<variableExpression><![CDATA[$F{totalHits}]]></variableExpression>
+		</variable>
+	</subDataset>
+	<subDataset name="OrgChartDataset" uuid="510eee6c-4058-4209-84b3-3703c0e13add">
+		<parameter name="monthspassed" class="java.lang.String"/>
+		<queryString>
+			<![CDATA[select org, sum(count)as totalHits from CONTENT_ACCESS_BY_MONTH where monthspassed = $P{monthspassed} group by org order by totalHits desc LIMIT 10]]>
+		</queryString>
+		<field name="org" class="java.lang.String"/>
+		<field name="totalHits" class="java.math.BigDecimal"/>
+	</subDataset>
+	<parameter name="monthspassed" class="java.lang.Integer"/>
+	<parameter name="month" class="java.lang.String"/>
+	<queryString language="SQL">
+		<![CDATA[select * from CONTENT_ACCESS_BY_MONTH]]>
+	</queryString>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band splitType="Stretch"/>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="942" splitType="Stretch">
+			<frame>
+				<reportElement uuid="c49a8ac4-f719-4517-a135-9ae7745ab68e" mode="Opaque" x="0" y="57" width="575" height="529" backcolor="#3C3C3C"/>
+				<componentElement>
+					<reportElement uuid="0b2d2255-9e3e-4b1e-98bc-563dac6b5dc6" key="table" style="table" x="36" y="64" width="360" height="80"/>
+					<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+						<datasetRun subDataset="UserTableDataset" uuid="757a47a8-3555-4ef0-8556-cf1c480af1e9">
+							<datasetParameter name="monthspassed">
+								<datasetParameterExpression><![CDATA[$P{monthspassed}]]></datasetParameterExpression>
+							</datasetParameter>
+							<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+						</datasetRun>
+						<jr:column uuid="c476b3c7-94d5-4257-874d-7f9c8af15d90" width="177">
+							<jr:columnHeader style="table_CH" height="30" rowSpan="1">
+								<staticText>
+									<reportElement uuid="117b7607-8e56-4ffe-889e-29c46afbf35c" x="0" y="0" width="177" height="30"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font size="16" isBold="true"/>
+									</textElement>
+									<text><![CDATA[email]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:columnFooter style="table_CH" height="30" rowSpan="1"/>
+							<jr:detailCell style="table_TD" height="30" rowSpan="1">
+								<textField isStretchWithOverflow="true">
+									<reportElement uuid="2f52f28a-d959-4428-8f91-4462d58f437d" x="0" y="0" width="177" height="30"/>
+									<textElement textAlignment="Left" verticalAlignment="Middle">
+										<font size="12" isBold="false"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{email}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column uuid="ef0f3f09-3545-4936-8f13-28f68d31358e" width="145">
+							<jr:columnHeader style="table_CH" height="30" rowSpan="1">
+								<staticText>
+									<reportElement uuid="86c3ae7e-3c3c-4af1-815e-a43802fc70b2" x="0" y="0" width="145" height="30"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font size="16" isBold="true"/>
+									</textElement>
+									<text><![CDATA[org]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:columnFooter style="table_CH" height="30" rowSpan="1"/>
+							<jr:detailCell style="table_TD" height="30" rowSpan="1">
+								<textField isStretchWithOverflow="true">
+									<reportElement uuid="4c2f56bf-2405-42ee-9238-e1659645d712" x="0" y="0" width="145" height="30"/>
+									<textElement textAlignment="Left" verticalAlignment="Middle">
+										<font size="12" isBold="false"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{org}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column uuid="4cd34a89-453f-4bf2-b3a6-47433c9d6626" width="90">
+							<jr:columnHeader style="table_CH" height="30" rowSpan="1">
+								<staticText>
+									<reportElement uuid="b1fb9e3c-ad32-41ba-b752-446f335bb13c" x="0" y="0" width="90" height="30"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font size="16" isBold="true"/>
+									</textElement>
+									<text><![CDATA[hits]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:columnFooter style="table_CH" height="30" rowSpan="1"/>
+							<jr:detailCell style="table_TD" height="30" rowSpan="1">
+								<textField>
+									<reportElement uuid="509f5e29-e05d-4aee-a663-239c38780986" x="0" y="0" width="90" height="30"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font size="14" isBold="false"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{totalHits}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column uuid="b7486f44-3185-4bb9-aaed-a189abaeb47a" width="90">
+							<jr:columnHeader style="table_CH" height="30" rowSpan="1">
+								<staticText>
+									<reportElement uuid="d158479a-b9b4-4e85-b217-eaae8108330b" x="0" y="0" width="90" height="30"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font size="16" isBold="true"/>
+									</textElement>
+									<text><![CDATA[%]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:columnFooter style="table_CH" height="30" rowSpan="1"/>
+							<jr:detailCell style="table_TD" height="30" rowSpan="1">
+								<textField pattern="###0.00">
+									<reportElement uuid="f38c6020-beab-404b-87e8-a9d40b57ce87" x="0" y="0" width="90" height="30"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font size="14" isBold="false"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{totalHits}*100/$F{tot}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+					</jr:table>
+				</componentElement>
+				<pie3DChart>
+					<chart>
+						<reportElement uuid="f4322886-c092-4349-8ef8-a341dcfc4f9e" positionType="Float" x="21" y="179" width="532" height="268"/>
+						<chartTitle/>
+						<chartSubtitle/>
+						<chartLegend textColor="#FFFFFF"/>
+					</chart>
+					<pieDataset>
+						<dataset>
+							<datasetRun subDataset="UserChartDataset" uuid="78b7e990-3613-4ab0-be40-9964af88bbd1">
+								<datasetParameter name="monthspassed">
+									<datasetParameterExpression><![CDATA[$P{monthspassed}]]></datasetParameterExpression>
+								</datasetParameter>
+							</datasetRun>
+						</dataset>
+						<keyExpression><![CDATA[$F{email}]]></keyExpression>
+						<valueExpression><![CDATA[$F{totalHits}]]></valueExpression>
+					</pieDataset>
+					<pie3DPlot>
+						<plot/>
+						<itemLabel>
+							<font size="8"/>
+						</itemLabel>
+					</pie3DPlot>
+				</pie3DChart>
+				<staticText>
+					<reportElement uuid="b636fc8d-779f-4551-9998-851d87eb50fb" mode="Opaque" x="0" y="13" width="575" height="34" forecolor="#FFFFFF" backcolor="#3C3C3C"/>
+					<textElement textAlignment="Center">
+						<font size="20"/>
+					</textElement>
+					<text><![CDATA[Users who had most number of hits]]></text>
+				</staticText>
+			</frame>
+			<frame>
+				<reportElement uuid="ce635c63-fb92-4f02-acdf-4972f00c9cf1" positionType="Float" mode="Opaque" x="0" y="589" width="1160" height="352" backcolor="#3C3C3C"/>
+				<componentElement>
+					<reportElement uuid="9820f256-0494-4a94-86a4-41a8b836fa10" key="table 2" style="table 2" x="52" y="63" width="360" height="286"/>
+					<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+						<datasetRun subDataset="OrgTableDataset" uuid="bfe90023-6ce9-4504-93ba-7bbee5fa1e3c">
+							<datasetParameter name="monthspassed">
+								<datasetParameterExpression><![CDATA[$P{monthspassed}]]></datasetParameterExpression>
+							</datasetParameter>
+							<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+						</datasetRun>
+						<jr:column uuid="22200d18-32e1-4f12-935b-d5f7301a10e6" width="164">
+							<jr:columnHeader style="table 2_CH" height="30" rowSpan="1">
+								<staticText>
+									<reportElement uuid="7fa75be4-bd73-4547-8730-7573b226b68a" x="0" y="0" width="164" height="30"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font size="16" isBold="true"/>
+									</textElement>
+									<text><![CDATA[org]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:columnFooter style="table 2_CH" height="30" rowSpan="1"/>
+							<jr:detailCell style="table 2_TD" height="29" rowSpan="1">
+								<textField>
+									<reportElement uuid="7fa312a4-bc3d-4853-a5b3-ca8206f20725" x="0" y="0" width="164" height="29"/>
+									<textElement textAlignment="Left" verticalAlignment="Middle">
+										<font size="12" isBold="false"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{org}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column uuid="d4c3d827-e2d5-485c-8f21-e0ee54488148" width="90">
+							<jr:columnHeader style="table 2_CH" height="30" rowSpan="1">
+								<staticText>
+									<reportElement uuid="015f2ffd-1443-4293-a957-ab8a06136d85" x="0" y="0" width="90" height="30"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font size="16" isBold="true"/>
+									</textElement>
+									<text><![CDATA[totalHits]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:columnFooter style="table 2_CH" height="30" rowSpan="1"/>
+							<jr:detailCell style="table 2_TD" height="29" rowSpan="1">
+								<textField>
+									<reportElement uuid="0a0d9d72-ac58-482a-addc-ec00e6e895a5" x="0" y="0" width="90" height="29"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font size="12" isBold="false"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{totalHits}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column uuid="39a31cff-b45a-4440-ae49-83efdd7a0449" width="90">
+							<jr:columnHeader style="table 2_CH" height="30" rowSpan="1">
+								<staticText>
+									<reportElement uuid="563e0e6f-d810-4651-91df-f8c6b7f711c2" x="0" y="0" width="90" height="30"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font size="16" isBold="true"/>
+									</textElement>
+									<text><![CDATA[%]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:columnFooter style="table 2_CH" height="30" rowSpan="1"/>
+							<jr:detailCell style="table 2_TD" height="29" rowSpan="1">
+								<textField pattern="###0.00">
+									<reportElement uuid="48f367b9-e595-4885-a850-01fb58aef939" x="0" y="0" width="90" height="29"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font size="12" isBold="false"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{totalHits}*100/$F{tot}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+					</jr:table>
+				</componentElement>
+				<pie3DChart>
+					<chart>
+						<reportElement uuid="7e435694-0943-493a-b524-4a2a7ba8b79b" x="553" y="87" width="563" height="263"/>
+						<chartTitle/>
+						<chartSubtitle/>
+						<chartLegend textColor="#FFFFFF"/>
+					</chart>
+					<pieDataset>
+						<dataset>
+							<datasetRun subDataset="OrgChartDataset" uuid="1bc8b04e-8567-415a-bc1f-4b4822078f89">
+								<datasetParameter name="monthspassed">
+									<datasetParameterExpression><![CDATA[$P{monthspassed}]]></datasetParameterExpression>
+								</datasetParameter>
+							</datasetRun>
+						</dataset>
+						<keyExpression><![CDATA[$F{org}]]></keyExpression>
+						<valueExpression><![CDATA[$F{totalHits}]]></valueExpression>
+					</pieDataset>
+					<pie3DPlot>
+						<plot/>
+						<itemLabel>
+							<font size="8"/>
+						</itemLabel>
+					</pie3DPlot>
+				</pie3DChart>
+				<staticText>
+					<reportElement uuid="b636fc8d-779f-4551-9998-851d87eb50fb" mode="Opaque" x="338" y="17" width="485" height="28" forecolor="#FFFFFF" backcolor="#3C3C3C"/>
+					<textElement textAlignment="Center">
+						<font size="20"/>
+					</textElement>
+					<text><![CDATA[Organizations which had most number of hits]]></text>
+				</staticText>
+			</frame>
+			<frame>
+				<reportElement uuid="57527d7a-8bc3-46ac-9886-d35b751adeec" mode="Opaque" x="577" y="57" width="583" height="549" backcolor="#3C3C3C"/>
+				<componentElement>
+					<reportElement uuid="6ad73955-6ea2-4791-b237-56caba67b6fb" key="table 1" style="table 1" x="153" y="64" width="360" height="80"/>
+					<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+						<datasetRun subDataset="tagDataset" uuid="6f1c8cf3-925e-45b6-9775-989f481e1e8b">
+							<datasetParameter name="monthspassed">
+								<datasetParameterExpression><![CDATA[$P{monthspassed}]]></datasetParameterExpression>
+							</datasetParameter>
+							<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+						</datasetRun>
+						<jr:column uuid="a0edc828-bede-4bdb-b850-805e0bbcdb3f" width="111">
+							<jr:columnHeader style="table 1_CH" height="30" rowSpan="1">
+								<staticText>
+									<reportElement uuid="7ebc6dde-1af1-4a47-8a65-fa8294f181c6" x="0" y="0" width="111" height="30"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font size="16" isBold="true"/>
+									</textElement>
+									<text><![CDATA[tag]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:columnFooter style="table 1_CH" height="30" rowSpan="1"/>
+							<jr:detailCell style="table 1_TD" height="31" rowSpan="1">
+								<textField>
+									<reportElement uuid="00c9082e-55ab-4944-8b92-cf58d997588a" x="0" y="0" width="111" height="31"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font size="12" isBold="false"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{tag}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column uuid="ae6c232d-abe9-4342-8efa-3db45a4a2f89" width="90">
+							<jr:columnHeader style="table 1_CH" height="30" rowSpan="1">
+								<staticText>
+									<reportElement uuid="5d13daf6-b0c2-42f8-8588-e78001143a1d" x="0" y="0" width="90" height="30"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font size="16" isBold="true"/>
+									</textElement>
+									<text><![CDATA[hits]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:columnFooter style="table 1_CH" height="30" rowSpan="1"/>
+							<jr:detailCell style="table 1_TD" height="31" rowSpan="1">
+								<textField>
+									<reportElement uuid="f0d84d85-1dce-4b9e-95db-4af0e20d8ead" x="0" y="0" width="90" height="31"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font size="12" isBold="false"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{tagHits}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column uuid="74ad01ac-77b2-4268-9a36-1649c718fb84" width="90">
+							<jr:columnHeader style="table 1_CH" height="30" rowSpan="1">
+								<staticText>
+									<reportElement uuid="ea4279e2-edab-4bd5-90bc-efd991ece92f" x="0" y="0" width="90" height="30"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font size="16" isBold="true"/>
+									</textElement>
+									<text><![CDATA[%]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:columnFooter style="table 1_CH" height="30" rowSpan="1"/>
+							<jr:detailCell style="table 1_TD" height="31" rowSpan="1">
+								<textField pattern="###0.00">
+									<reportElement uuid="50d68a7e-59d5-415e-97bc-ccf1116d9154" x="0" y="0" width="90" height="31"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font size="12" isBold="false"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{percentage}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+					</jr:table>
+				</componentElement>
+				<pie3DChart>
+					<chart>
+						<reportElement uuid="715dd011-f2ad-4863-8404-e5a5fc486723" positionType="Float" x="23" y="179" width="540" height="268"/>
+						<chartTitle/>
+						<chartSubtitle/>
+						<chartLegend textColor="#FFFFFF"/>
+					</chart>
+					<pieDataset>
+						<dataset>
+							<datasetRun subDataset="tagDataset" uuid="067f4899-0875-4f2f-a550-34cd861ec21b">
+								<datasetParameter name="monthspassed">
+									<datasetParameterExpression><![CDATA[$P{monthspassed}]]></datasetParameterExpression>
+								</datasetParameter>
+							</datasetRun>
+						</dataset>
+						<keyExpression><![CDATA[$F{tag}]]></keyExpression>
+						<valueExpression><![CDATA[$F{tagHits}]]></valueExpression>
+					</pieDataset>
+					<pie3DPlot>
+						<plot/>
+						<itemLabel>
+							<font size="8"/>
+						</itemLabel>
+					</pie3DPlot>
+				</pie3DChart>
+				<staticText>
+					<reportElement uuid="b636fc8d-779f-4551-9998-851d87eb50fb" mode="Opaque" x="0" y="23" width="583" height="34" forecolor="#FFFFFF" backcolor="#3C3C3C"/>
+					<textElement textAlignment="Center">
+						<font size="20"/>
+					</textElement>
+					<text><![CDATA[Tags which had most number of hits]]></text>
+				</staticText>
+			</frame>
+			<frame>
+				<reportElement uuid="35b93fb7-9118-4c86-a04f-6dd6cba7c921" mode="Opaque" x="0" y="0" width="1160" height="52" backcolor="#3C3C3C"/>
+				<staticText>
+					<reportElement uuid="aa816a6b-e012-4abb-8046-8d6b540e0f81" x="330" y="2" width="500" height="22" forecolor="#FFFFFF"/>
+					<textElement textAlignment="Center">
+						<font size="18" isBold="true"/>
+					</textElement>
+					<text><![CDATA[OT STATISTICS FOR THE MONTH OF]]></text>
+				</staticText>
+				<textField>
+					<reportElement uuid="72f65c74-23c1-4d9b-a244-da786a71c05f" x="330" y="27" width="500" height="22" forecolor="#FFFFFF"/>
+					<textElement textAlignment="Center">
+						<font size="18" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{month}]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</summary>
+</jasperReport>
